@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -72,10 +73,39 @@ public class Client {
         clientSocket.close();
     }
 
+    public static void getUser(String username) {
+        try {
+            // Create a socket to connect to localhost on port 8080
+            Socket socket = new Socket("localhost", 8080);
+
+            // Create the GET request
+            String getRequest = "GET " + username +" HTTP/1.1\r\n" +
+                    "Host: localhost:8080\r\n" +
+                    "Connection: close\r\n\r\n";
+
+            // Send the request
+            PrintWriter out = new PrintWriter(socket.getOutputStream());
+            out.print(getRequest);
+            out.flush();
+
+            // Read and print the response
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                System.out.println(line);
+            }
+
+            // Close resources
+            out.close();
+            in.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         Client greetClient = new Client();
-//        greetClient.serverCheck("localhost",6666);
         greetClient.portCheck("localhost",100,500);
-
     }
 }
