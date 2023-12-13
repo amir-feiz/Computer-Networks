@@ -5,11 +5,11 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Client {
-    private Socket clientSocket;
+    private static Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
 
-    public void serverCheck(String ip, int port) throws IOException {
+    public static void serverCheck(String ip, int port) throws IOException {
         try {
             clientSocket = new Socket(ip, port);
             System.out.println("server online");
@@ -142,7 +142,6 @@ public class Client {
     }
 
     public static void main(String[] args) throws IOException {
-        Client greetClient = new Client();
-        greetClient.portCheck("localhost",100,500);
+        UserPanel.menu();
     }
 }
