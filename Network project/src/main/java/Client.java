@@ -73,6 +73,43 @@ public class Client {
         clientSocket.close();
     }
 
+    public static void postUser(String username,String age){
+        try {
+            // Create a socket to connect to localhost on port 8080
+            Socket socket = new Socket("localhost", 8080);
+
+            // Create the POST request body with parameters
+            String postData = username + " " + age; // Replace with desired name and age
+
+            // Construct the POST request
+            String postRequest = "POST/HTTP/1.1"+
+                    "Host:localhost:8080"+
+                    "Content-Type:application/x-www-form-urlencoded"+
+                    "Content-Length:" + postData.length() +
+                    "Connection:close "+
+                    postData;
+
+            // Send the request
+            PrintWriter out = new PrintWriter(socket.getOutputStream());
+            out.print(postRequest);
+            out.flush();
+
+            // Read and print the response
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                System.out.println(line);
+            }
+
+            // Close resources
+            out.close();
+            in.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void getUser(String username) {
         try {
             // Create a socket to connect to localhost on port 8080
