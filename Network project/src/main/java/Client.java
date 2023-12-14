@@ -89,6 +89,7 @@ public class Client {
                     "Connection:close " +
                     postData;
 
+            System.out.println(postRequest);
             // Send the request
             PrintWriter out = new PrintWriter(socket.getOutputStream());
             out.print(postRequest);
