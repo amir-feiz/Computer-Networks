@@ -13,19 +13,19 @@ public class Client {
         try {
             clientSocket = new Socket(ip, port);
             System.out.println("server online");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("server offline");
         }
     }
 
-    public void portCheck(String ip,int start,int end) throws IOException {
+    public static void portCheck(String ip, int start, int end) throws IOException {
         Socket socket;
 
-        for (int i=start;i<=end;i++){
+        for (int i = start; i <= end; i++) {
             try {
-                socket = new Socket(ip,i);
+                socket = new Socket(ip, i);
                 System.out.print("IP:\t" + ip + "\tport:\t" + i + "\t name:\t");
-                switch (i){
+                switch (i) {
                     case 20:
                         System.out.print("FTP");
                         break;
@@ -51,29 +51,29 @@ public class Client {
                         System.out.print("https");
                         break;
                     default:
-                        System.out.print("no name");
+                        System.out.print("anonymous service running on this port");
                         break;
                 }
                 System.out.println("");
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
         }
     }
-
 
     public String sendMessage(String msg) throws IOException {
         out.println(msg);
         String resp = in.readLine();
         return resp;
     }
+
     public void stopConnection() throws IOException {
         in.close();
         out.close();
         clientSocket.close();
     }
 
-    public static void postUser(String username,String age){
+    public static void postUser(String username, String age) {
         try {
             // Create a socket to connect to localhost on port 8080
             Socket socket = new Socket("localhost", 8080);
@@ -82,11 +82,11 @@ public class Client {
             String postData = username + " " + age; // Replace with desired name and age
 
             // Construct the POST request
-            String postRequest = "POST/HTTP/1.1"+
-                    "Host:localhost:8080"+
-                    "Content-Type:application/x-www-form-urlencoded"+
+            String postRequest = "POST/HTTP/1.1" +
+                    "Host:localhost:8080" +
+                    "Content-Type:application/x-www-form-urlencoded" +
                     "Content-Length:" + postData.length() +
-                    "Connection:close "+
+                    "Connection:close " +
                     postData;
 
             // Send the request
@@ -110,13 +110,13 @@ public class Client {
         }
     }
 
-    public static void getUser(String username) {
+    public static void getUser(String userId) {
         try {
             // Create a socket to connect to localhost on port 8080
             Socket socket = new Socket("localhost", 8080);
 
             // Create the GET request
-            String getRequest = "GET " + username +" HTTP/1.1\r\n" +
+            String getRequest = "GET " + userId + " HTTP/1.1\r\n" +
                     "Host: localhost:8080\r\n" +
                     "Connection: close\r\n\r\n";
 
